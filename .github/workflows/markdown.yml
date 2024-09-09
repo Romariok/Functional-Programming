@@ -19,3 +19,16 @@ jobs:
           files: "*.md"
           config_file: .markdownlint.yml
           dot: true
+  lint0:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: markdownlint-cli
+        uses: nosborn/github-action-markdown-cli@v3.3.0
+        with:
+          files: "lab0/*.md"
+          config_file: .markdownlint.yml
+          dot: true
