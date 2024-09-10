@@ -36,4 +36,4 @@
 
 [`Programming Elixir >= 1.6`](https://vk.com/doc273848965_477218994?hash=2V0uz2wwQ8XYVfGoy9e1Vda3jt6tDrWUowQ0cNh0gxD&dl=mkpVQ4FtSa6uqBXK20EZr40zm7q2Sc58nP54BdP47z4)
 
-<img src="../docs/book.jpg"><img/>
+![book](../docs/book.jpg)
