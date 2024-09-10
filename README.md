@@ -5,3 +5,7 @@
 [![CI Workflow Status](https://github.com/Romariok/Functional-Programming/actions/workflows/elixir.yml/badge.svg)](https://github.com/Romariok/Functional-Programming/actions/workflows/elixir.yml)
 
 Лабораторные работы по функциональному программированию (ИТМО, ПИиКТ-СиППО, 3 курс).   
+
+---
+
+[Лабораторная работа №0](./lab0/README.md)
