@@ -32,3 +32,4 @@ guardian-*.tar
 /priv/plts/*.plt.hash
 
 !.tool-versions
+.elixir_ls
