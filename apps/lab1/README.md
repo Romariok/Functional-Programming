@@ -45,3 +45,114 @@
 > $3025 - 385 = 2640$.
 >
 > Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+
+### Традиционное решение
+
+```python
+def prob6():
+   sum_of_sq = sum(natural_number**2 for natural_number in range(1, 101))
+   sq_of_sum = sum(natural_number for natural_number in range(1, 101))**2
+   return sq_of_sum - sum_of_sq
+```
+
+### Хвостовая рекурсия
+
+```elixir
+def tail_recursion() do
+   [sum, sum_of_sq] = sum_n_sq_tail_rec(100)
+   :math.pow(sum, 2) - sum_of_sq
+end
+
+def sum_n_sq_tail_rec(n), do: sum_n_sq_tail_rec(n, 0, 0)
+
+defp sum_n_sq_tail_rec(0, sum, sum_of_sq), do: [sum, sum_of_sq]
+
+defp sum_n_sq_tail_rec(n, sum, sum_of_sq),
+   do: sum_n_sq_tail_rec(n - 1, sum + n, sum_of_sq + n * n)
+```
+
+### Рекурсия
+
+```elixir
+def recursion() do
+   :math.pow(Enum.sum(1..100), 2) - sum_of_sq_rec(100)
+end
+
+defp sum_of_sq_rec(1), do: 1
+
+defp sum_of_sq_rec(n), do: n * n + sum_of_sq_rec(n - 1)
+```
+
+### Модульная реализация (Sequence generator, reduce)
+
+```elixir
+def modular() do
+   sq_of_sum =
+      sequence_generator(100)
+      |> Enum.reduce(0, &(&1 + &2))
+
+   sum_of_sq =
+      sequence_generator(100)
+      |> Enum.reduce(0, fn x, acc -> acc + x * x end)
+
+   :math.pow(sq_of_sum, 2) - sum_of_sq
+end
+
+defp sequence_generator(n), do: 1..n
+```
+
+### Генерация последовательности при помощи `map`
+
+```elixir
+def seq_gen_map() do
+   sq_of_sum =
+      sequence_generator(100)
+      |> Enum.sum()
+
+   sum_of_sq =
+      sequence_generator(100)
+      |> Stream.map(&(&1 * &1))
+      |> Enum.sum()
+
+   :math.pow(sq_of_sum, 2) - sum_of_sq
+end
+```
+
+### Бесконечные структуры, ленивыое вычисление (Stream)
+
+```elixir
+def inf_struct_lazy() do
+   sq_of_sum =
+      Stream.iterate(1, &(&1 + 1))
+      |> Stream.take(100)
+      |> Enum.sum()
+
+   sum_of_sq =
+      Stream.iterate(1, &(&1 + 1))
+      |> Stream.take(100)
+      |> Stream.map(&(&1 * &1))
+      |> Enum.sum()
+
+   :math.pow(sq_of_sum, 2) - sum_of_sq
+  end
+```
+
+---
+
+## Проблема №25. 1000-digit Fibonacci Number
+
+> The Fibonacci sequence is defined by the recurrence relation:
+> 
+> $F_n = F_{n-1} + F_{n-2}$, where $F_1 = 1$ and $F_2 = 1$
+>
+> Hence the first $12$ terms will be:
+> $$F_1 = 1$$
+> $$F_2 = 1$$
+> $$F_3 = 2$$
+> $$\vdots$$
+> $$F_{12} = 144$$
+> The $12$th term, $F_{12}$ is the first term to contain three digits.
+>
+> What is the index of the first term in the Fibonacci sequence to contain $1000$ digits?
+
+### Традиционное решение
