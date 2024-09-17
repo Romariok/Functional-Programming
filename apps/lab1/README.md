@@ -58,12 +58,10 @@ def prob6():
 ### Хвостовая рекурсия
 
 ```elixir
-def tail_recursion() do
-   [sum, sum_of_sq] = sum_n_sq_tail_rec(100)
+def tail_recursion do
+   [sum, sum_of_sq] = sum_n_sq_tail_rec(100, 0, 0)
    :math.pow(sum, 2) - sum_of_sq
 end
-
-def sum_n_sq_tail_rec(n), do: sum_n_sq_tail_rec(n, 0, 0)
 
 defp sum_n_sq_tail_rec(0, sum, sum_of_sq), do: [sum, sum_of_sq]
 
@@ -156,3 +154,79 @@ def inf_struct_lazy() do
 > What is the index of the first term in the Fibonacci sequence to contain $1000$ digits?
 
 ### Традиционное решение
+
+```python
+fib1, fib2 = 1, 1
+it = 2
+while len(str(fib2))<1000:
+   tmp = fib2+fib1
+   fib1 = fib2
+   fib2 = tmp
+   it+=1
+print(it)
+```
+
+### Хвостовая рекурсия
+
+```elixir
+def tail_recursion do
+    exact_fib_num_tail_rec(1, 1, 2)
+end
+
+def exact_fib_num_tail_rec(prev, current, index) do
+   cond do
+   length(Integer.digits(current)) >= @limit -> index
+   true -> exact_fib_num_tail_rec(current, current + prev, index + 1)
+   end
+end
+```
+
+### Рекурсия
+
+```elixir
+def recursion do
+   exact_fib_num_rec(1, 1)
+end
+
+def exact_fib_num_rec(prev, current) do
+   cond do
+   length(Integer.digits(current)) >= @limit -> 2
+   true -> exact_fib_num_rec(current, current + prev) + 1
+   end
+end
+```
+
+### Модульная реализация (Sequence generator, reduce)
+
+```elixir
+def modular do
+   Stream.unfold({1, 1}, fn {a, b} -> {a, {b, a + b}} end)
+   |> Stream.take_while(&(length(Integer.digits(&1)) < @limit))
+   |> Enum.count()
+   |> Kernel.+(1)
+end
+```
+
+### Генерация последовательности при помощи `map`
+
+```elixir
+def seq_gen_map do
+   Stream.unfold({1, 1}, fn {a, b} -> {a, {b, a + b}} end)
+   |> Stream.map(fn fib -> fib end)
+   |> Stream.take_while(&(length(Integer.digits(&1)) < @limit))
+   |> Enum.count()
+   |> Kernel.+(1)
+end
+```
+
+### Бесконечные структуры, ленивыое вычисление (Stream)
+
+```elixir
+def inf_struct_lazy do
+   Stream.iterate({1, 1}, fn {a, b} -> {b, a + b} end)
+   |> Stream.map(fn {a, _b} -> a end)
+   |> Stream.take_while(&(length(Integer.digits(&1)) < @limit))
+   |> Enum.count()
+   |> Kernel.+(1)
+end
+```

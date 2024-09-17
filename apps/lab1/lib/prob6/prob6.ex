@@ -7,11 +7,9 @@ defmodule Prob6 do
   Monolitchic implementation with tail recursion
   """
   def tail_recursion do
-    [sum, sum_of_sq] = sum_n_sq_tail_rec(100)
+    [sum, sum_of_sq] = sum_n_sq_tail_rec(100, 0, 0)
     :math.pow(sum, 2) - sum_of_sq
   end
-
-  def sum_n_sq_tail_rec(n), do: sum_n_sq_tail_rec(n, 0, 0)
 
   defp sum_n_sq_tail_rec(0, sum, sum_of_sq), do: [sum, sum_of_sq]
 
