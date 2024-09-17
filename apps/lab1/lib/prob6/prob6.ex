@@ -47,7 +47,7 @@ defmodule Prob6 do
   @doc """
   Sequence generation using map
   """
-  def seq_gen_map  do
+  def seq_gen_map do
     sq_of_sum =
       sequence_generator(100)
       |> Enum.sum()
