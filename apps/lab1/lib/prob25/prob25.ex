@@ -11,9 +11,10 @@ defmodule Prob25 do
   end
 
   def exact_fib_num_tail_rec(prev, current, index) do
-    cond do
-      length(Integer.digits(current)) >= @limit -> index
-      true -> exact_fib_num_tail_rec(current, current + prev, index + 1)
+    if length(Integer.digits(current)) >= @limit do
+      index
+    else
+      exact_fib_num_tail_rec(current, current + prev, index + 1)
     end
   end
 
@@ -25,9 +26,10 @@ defmodule Prob25 do
   end
 
   def exact_fib_num_rec(prev, current) do
-    cond do
-      length(Integer.digits(current)) >= @limit -> 2
-      true -> exact_fib_num_rec(current, current + prev) + 1
+    if length(Integer.digits(current)) >= @limit do
+      2
+    else
+      exact_fib_num_rec(current, current + prev) + 1
     end
   end
 
