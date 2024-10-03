@@ -92,17 +92,17 @@ defmodule AVLDict do
 
     def insert(nil, _key, _value), do: Node.new()
 
-    def insert(%Node{key: nodeKey, value: _nodeValue} = node, key, value) when nodeKey == key,
+    def insert(%Node{key: node_key, value: _node_value} = node, key, value) when node_key == key,
       do: %Node{node | value: value}
 
-    def insert(%Node{key: nodeKey, left: left} = node, key, value) when nodeKey > key do
-      newSmall = insert(left, key, value)
-      balance(%Node{node | left: newSmall, height: max(height(newSmall) + 1, node.height)})
+    def insert(%Node{key: node_key, left: left} = node, key, value) when node_key > key do
+      new_small = insert(left, key, value)
+      balance(%Node{node | left: new_small, height: max(height(new_small) + 1, node.height)})
     end
 
-    def insert(%Node{key: nodeKey, right: right} = node, key, value) when nodeKey < key do
-      newBig = insert(right, key, value)
-      balance(%Node{node | right: newBig, height: max(height(newBig) + 1, node.height)})
+    def insert(%Node{key: node_key, right: right} = node, key, value) when node_key < key do
+      new_big = insert(right, key, value)
+      balance(%Node{node | right: new_big, height: max(height(new_big) + 1, node.height)})
     end
   end
 end
