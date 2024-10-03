@@ -4,21 +4,24 @@ defmodule Lab2Test do
   use ExUnit.Case
   doctest AVLDict
 
-
   test "Height of node with no child" do
-    node_height = Dictionary.height(Node.new)
+    node_height = Dictionary.height(Node.new())
     assert node_height == 1
   end
 
   test "Height of node with one child" do
-    node_height = Dictionary.height(%Node{right: Node.new})
+    node_height = Dictionary.height(%Node{right: Node.new()})
     assert node_height == 2
   end
 
   test "Height of node with two childs with heights 2 and 3" do
-    node_height = Dictionary.height(%Node{Node.new |
-    right: %Node{left: Node.new},
-    left: %Node{left: %Node{right: Node.new}}})
+    node_height =
+      Dictionary.height(%Node{
+        Node.new()
+        | right: %Node{left: Node.new()},
+          left: %Node{left: %Node{right: Node.new()}}
+      })
+
     assert node_height == 4
   end
 
@@ -51,7 +54,10 @@ defmodule Lab2Test do
       height: 3
     }
 
-    assert %Node{Dictionary.left_rotate(node) | height: Dictionary.height(Dictionary.left_rotate(node))} == expected_node
+    assert %Node{
+             Dictionary.left_rotate(node)
+             | height: Dictionary.height(Dictionary.left_rotate(node))
+           } == expected_node
   end
 
   test "Right rotation" do
@@ -83,7 +89,10 @@ defmodule Lab2Test do
       height: 3
     }
 
-    assert %Node{Dictionary.right_rotate(node) | height: Dictionary.height(Dictionary.right_rotate(node))} == expected_node
+    assert %Node{
+             Dictionary.right_rotate(node)
+             | height: Dictionary.height(Dictionary.right_rotate(node))
+           } == expected_node
   end
 
   test "Big right rotation" do
@@ -101,7 +110,7 @@ defmodule Lab2Test do
           height: 2,
           left: %Node{key: 6, value: "value6", height: 1},
           right: %Node{key: 7, value: "value7", height: 1}
-          },
+        },
         height: 3
       },
       height: 4
@@ -145,7 +154,7 @@ defmodule Lab2Test do
           height: 2,
           left: %Node{key: 6, value: "value6", height: 1},
           right: %Node{key: 7, value: "value7", height: 1}
-          },
+        },
         height: 3
       },
       height: 4
@@ -173,5 +182,4 @@ defmodule Lab2Test do
 
     assert Dictionary.balance(node) == expected_node
   end
-
 end

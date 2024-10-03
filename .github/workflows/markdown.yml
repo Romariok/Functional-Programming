@@ -42,6 +42,19 @@ jobs:
       - name: markdownlint-cli
         uses: nosborn/github-action-markdown-cli@v3.3.0
         with:
-          files: "lab1/*.md"
+          files: "apps/lab1/*.md"
+          config_file: .markdownlint.yml
+          dot: true
+  lint2:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: markdownlint-cli
+        uses: nosborn/github-action-markdown-cli@v3.3.0
+        with:
+          files: "apps/lab2/*.md"
           config_file: .markdownlint.yml
           dot: true
