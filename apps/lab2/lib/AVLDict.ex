@@ -61,7 +61,7 @@ defmodule AVLDict do
             right:
               %Node{
                 right: %Node{height: right_right_height} = right_right,
-                left: %Node{height: right_left_height} =  right_left
+                left: %Node{height: right_left_height} = right_left
               } = right
           } = node
         )
@@ -278,6 +278,7 @@ defmodule AVLDict do
         })
         when target_key < key do
       new_left = do_remove(target_key, left)
+
       case {new_left, right} do
         {:not_found, _} ->
           :not_found
@@ -305,8 +306,9 @@ defmodule AVLDict do
         })
         when target_key > key do
       new_right = do_remove(target_key, right)
+
       case {left, new_right} do
-        {_, :not_found}->
+        {_, :not_found} ->
           :not_found
 
         {@empty_node, @empty_node} ->

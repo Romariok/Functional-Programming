@@ -175,9 +175,20 @@ defmodule Lab2Test do
   # Ассоциативность операции умножения - слияние деревьев
 
   def associativity(t1_size, t2_size, t3_size) do
-    t1 = Dictionary.from_list(Enum.map(1..t1_size, fn _ -> {:rand.uniform(30), :rand.uniform(100)} end))
-    t2 = Dictionary.from_list(Enum.map(1..t2_size, fn _ -> {:rand.uniform(30), :rand.uniform(100)} end))
-    t3 = Dictionary.from_list(Enum.map(1..t3_size, fn _ -> {:rand.uniform(30), :rand.uniform(100)} end))
+    t1 =
+      Dictionary.from_list(
+        Enum.map(1..t1_size, fn _ -> {:rand.uniform(30), :rand.uniform(100)} end)
+      )
+
+    t2 =
+      Dictionary.from_list(
+        Enum.map(1..t2_size, fn _ -> {:rand.uniform(30), :rand.uniform(100)} end)
+      )
+
+    t3 =
+      Dictionary.from_list(
+        Enum.map(1..t3_size, fn _ -> {:rand.uniform(30), :rand.uniform(100)} end)
+      )
 
     r1 = Dictionary.merge(t1, Dictionary.merge(t2, t3))
     r2 = Dictionary.merge(Dictionary.merge(t1, t2), t3)
@@ -186,14 +197,20 @@ defmodule Lab2Test do
   end
 
   test "Small Monoid Test" do
-    Enum.map(1..10_000, fn _ -> associativity(:rand.uniform(10) - 1, :rand.uniform(10) - 1, :rand.uniform(10) - 1) end)
+    Enum.map(1..10_000, fn _ ->
+      associativity(:rand.uniform(10) - 1, :rand.uniform(10) - 1, :rand.uniform(10) - 1)
+    end)
   end
 
   test "Medium Monoid Test" do
-    Enum.map(1..10_000, fn _ -> associativity(:rand.uniform(100) - 1, :rand.uniform(100) - 1, :rand.uniform(100) - 1) end)
+    Enum.map(1..10_000, fn _ ->
+      associativity(:rand.uniform(100) - 1, :rand.uniform(100) - 1, :rand.uniform(100) - 1)
+    end)
   end
 
   test "Big Monoid Test" do
-    Enum.map(1..10_000, fn _ -> associativity(:rand.uniform(1000) - 1, :rand.uniform(1000) - 1, :rand.uniform(1000) - 1) end)
+    Enum.map(1..10_000, fn _ ->
+      associativity(:rand.uniform(1000) - 1, :rand.uniform(1000) - 1, :rand.uniform(1000) - 1)
+    end)
   end
 end
