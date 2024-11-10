@@ -1,4 +1,7 @@
 defmodule InputParser do
+  @moduledoc """
+    Parses input
+  """
   def start(pid) do
     IO.puts("Input of first 2 points (Format: X Y):\n")
     loop_input(pid, nil)
@@ -23,14 +26,14 @@ defmodule InputParser do
       if prev_point_x == nil do
         send(pid, {:point, {x, y}})
         loop_input(pid, x)
+      end
+
+      if prev_point_x < x do
+        send(pid, {:point, {x, y}})
+        loop_input(pid, x)
       else
-        if prev_point_x < x do
-          send(pid, {:point, {x, y}})
-          loop_input(pid, x)
-        else
-          IO.puts("X value must be greater than previous X value")
-          loop_input(pid, prev_point_x)
-        end
+        IO.puts("X value must be greater than previous X value")
+        loop_input(pid, prev_point_x)
       end
     end
   end
