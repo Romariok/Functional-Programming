@@ -1,2 +1,0 @@
-defmodule Linear do
-end

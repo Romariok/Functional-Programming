@@ -1,13 +1,14 @@
 defmodule InputParser do
   def start(pid) do
+    IO.puts("Input of first 2 points (Format: X Y):\n")
     loop_input(pid, nil)
   end
 
   defp loop_input(pid, prev_point_x) do
     input = String.trim(IO.gets(""))
 
-    if input == "q" do
-      IO.puts("Exit program")
+    if input == "exit" do
+      IO.puts("Exit")
       System.halt()
     end
 
@@ -21,6 +22,7 @@ defmodule InputParser do
 
       if prev_point_x == nil do
         send(pid, {:point, {x, y}})
+        loop_input(pid, x)
       else
         if prev_point_x < x do
           send(pid, {:point, {x, y}})
@@ -34,17 +36,19 @@ defmodule InputParser do
   end
 
   defp validate_input(input) do
+    input = String.split(String.replace(input, ~r"\s{2,}", " "), " ")
+
     if length(input) != 2 do
       {:error, "Point must have 2 coordinates"}
     else
-      x_result = Float.parse(Enum.at(input, 0))
-      y_result = Float.parse(Enum.at(input, 1))
+      x_input = Float.parse(Enum.at(input, 0))
+      y_input = Float.parse(Enum.at(input, 1))
 
-      if x_result == :error or y_result == :error do
+      if x_input == :error or y_input == :error do
         {:error, "Invalid coordinates"}
       else
-        x = x_result.value
-        y = y_result.value
+        {x, _} = x_input
+        {y, _} = y_input
         {:ok, {x, y}}
       end
     end
